@@ -5,13 +5,11 @@
  * sotto la licenza MIT. Vedere il file LICENSE per i dettagli.
  */
 
-// use cvv\Collegamenti;
-// use cvv\CvvIntegration;
 // Definisci il percorso base dell'applicazione
 
 define('BASE_PATH', dirname(__DIR__));
 session_start();
-const URL_PATH = "https://todos.test";
+const URL_PATH = "http://todos.test";
 const COMMON_HTML_HEAD = BASE_PATH . '/public/commons/head.php';
 const COMMON_HTML_FOOT = BASE_PATH . '/public/commons/bottom_navigation.php';
 

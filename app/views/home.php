@@ -1,6 +1,3 @@
-<?php
-?>
-
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -8,27 +5,84 @@
         <title>Bytelab - Todos</title>
         <?php require COMMON_HTML_HEAD ?>
     </head>
+
     <style>
-    
-        
+        .new-todo-form {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+
+            & > form {
+                display: flex;
+                flex-direction: column;
+                background: var(--background-color);
+                padding: 20px;
+                border-radius: 10px;
+                position: relative;
+            }
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
     </style>
+
     <body>
         <div class="container">
             <h1> Todos </h1>
-            
+
+            <div>
+                <h3>Actions</h3>
+                <a href="javascript:void(0)" class="btn btn-primary" id="add-new-todo"> Add new </a>
+            </div>
+
+            <div>
+                <div class="new-todo-form" hidden>
+                    <form action="javascript:void(0)">
+                        <img src="<?=URL_PATH?>/svg/close.svg" class="icon close-btn" style="aspect-ratio: 1; width: 20px">
+                        <h4>Add a new ToDo</h4>
+                        <input    class="form-control mb-2" type="text" placeholder="Title"       required>
+                        <textarea class="form-control mb-2"             placeholder="Description" required></textarea>
+                        <input    class="form-control mb-2" type="date" placeholder="Due date"    required>
+                        <button type="submit" class="btn btn-primary"> Add </button>
+                    </form>
+                </div>
+            </div>
+
             <h3>La mia lista di cose da fare</h3>
             <div class="todo-list">
-
-
+                <!-- Sample todo items -->
                 <todo-item due-date="13/09/2025" title="Imparare i Web Components"    completed ></todo-item>
                 <todo-item due-date="14/09/2025" title="Costruire un componente ToDo"           ></todo-item>
                 <todo-item due-date="15/09/2025" title="Condividere il mio lavoro con gli amici"></todo-item>
-
-                
             </div>
-            
         </div>
     </body>
+
+    <script>
+        let btnAdd = document.getElementById("add-new-todo");
+		let newTodoForm = document.querySelector(".new-todo-form");
+		btnAdd.addEventListener("click", () => {
+			newTodoForm.hidden = false;
+        })
+
+        let allCloseBtns = document.querySelectorAll(".close-btn");
+		allCloseBtns.forEach(btn => {
+			btn.addEventListener("click", () => {
+				newTodoForm.hidden = true;
+            })
+        })
+    </script>
+
     <script>
         const db = new LocalDatabase("TaskDB", 1);
 
@@ -53,40 +107,6 @@
 				
             })
         }
-
-        /*async function runExample() {
-            try {
-                // 1. Apri il database e crea l'object store
-                await db.open("tasks", "id");
-
-                // 2. Aggiungi un nuovo task
-                const newTask = { task: new Task("Imparare IndexedDB", "",  "", false) };
-                await db.push("tasks", newTask);
-                console.log("Task aggiunto con successo!");
-
-                // 3. Recupera tutti i task
-                const allTasks = await db.getAll("tasks");
-                console.log("Tutti i tasks:", allTasks);
-                printTasks(allTasks)
-
-                // 4. Aggiorna un task
-                // const taskToUpdate = { id: 1, task: new Task("Completare la classe LocalDatabase", "",  "", true) };
-                // await db.put("tasks", taskToUpdate);
-                // console.log("Task aggiornato con successo!");
-
-                // 5. Recupera il task aggiornato per verificarlo
-                // const updatedTask = await db.get("tasks", 1);
-                // console.log("Task aggiornato:", updatedTask);
-                //
-                // // 6. Cancella un task
-                // await db.delete("tasks", 1);
-                // console.log("Task cancellato con successo!");
-
-            } catch (error) {
-                console.error("Si è verificato un errore:\n\t", error);
-            }
-        }*/
-        
         async function loadTasks() {
 			try {
 				// 1. Apri il database e crea l'object store

@@ -1,4 +1,15 @@
 :root {
+
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --accent-color: #6c757d;
+    --background-color: #f8f9fa;
+
+
     --todo-border-color: #ccc;
     --todo-background-color: #eee;
+}
+
+.icon {
+    filter: invert(1);
 }
